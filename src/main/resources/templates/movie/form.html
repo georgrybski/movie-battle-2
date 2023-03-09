@@ -5,17 +5,17 @@
     <title>Ada Movie</title>
 </head>
 <body>
-  <form action="#" th:action="@{app/movies}" th:object="${movie}" method="post">
-      <label>Title</label>
-      <input type="text" th:field="*{title}"/>
-      <label>Genre</label>
-      <input type="text" th:field="*{genre}"/>
-      <label>Rating</label>
-      <input type="decimal" step="0.1" maxLength="3" min="0" max="10" th:field="*{rating}"/>
-      <label>Image</label>
-      <input type="text" th:field="*{image}"><br/>
-      <input type="hidden" th:field="*{id}"/>
-      <input type="submit" value="Save"/>
-  </form>
+    <form action="#" th:action="@{/app/movies}" th:object="${movie}" method="post">
+        <label th:text="#{movie.title}"></label>
+        <input type="text" th:field="*{title}"/><br/>
+        <label th:text="#{movie.genre}"></label>
+        <input type="text" th:field="*{genre}"/><br/>
+        <label th:text="#{movie.ratings}"></label>
+        <input type="number" step=".1" maxlength="3" min="0" max="10" th:field="*{ratings}" /><br />
+        <label th:text="#{movie.image}"></label>
+        <input type="text" th:field="*{image}"><br/>
+        <input type="hidden" th:field="*{id}" />
+        <input type="submit" th:value="#{action.save}" />
+    </form>
 </body>
 </html>

@@ -1,38 +1,49 @@
-package br.ada.americanas.moviebattle.movie;
+package br.ada.americanas.moviebattle.player;
 
+import br.ada.americanas.moviebattle.movie.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("app/movies")
-public class MovieAppController {
-    private MovieService service;
+@RequestMapping("/app/players")
+public class PlayerAppController {
+    private PlayerService service;
 
     @Autowired
-    public MovieAppController(MovieService service) {
+    public PlayerAppController(PlayerService service) {
         this.service = service;
     }
 
     @GetMapping
     public String get(Model model) {
-        model.addAttribute("movies", service.list());
-        return "movie/list";
+        model.addAttribute("players", service.list());
+        return "player/list";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, Model model) {
+        Player player = service.findById(id).orElse(new Player());
+        model.addAttribute("player", player);
+        return "player/form";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        service.delete(id);
+        return "redirect:/app/players";
     }
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("movie", new Movie());
-        return "movie/form";
+        model.addAttribute("player", new Player());
+        return "player/form";
     }
 
     @PostMapping
-    public String save(@ModelAttribute Movie movie) {
-        service.add(movie);
-        return "redirect:/app/movies";
+    public String save(@ModelAttribute Player player) {
+        service.add(player);
+        return "redirect:/app/players";
     }
 }

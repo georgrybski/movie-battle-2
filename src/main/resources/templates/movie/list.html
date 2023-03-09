@@ -8,15 +8,25 @@
     <table>
         <thead>
             <tr>
-                <th>Movie Title</th>
-                <th>Movie Genre</th>
-                <th>Movie Rating</th>
+                <th th:text="#{movie.title}"></th>
+                <th th:text="#{movie.genre}"></th>
+                <th th:text="#{movie.ratings}"></th>
             </tr>
         </thead>
+        <tbody>
+        <tr th:each="movie : ${movies}">
+            <td th:text="${movie.title}"></td>
+            <td th:text="${movie.genre}"></td>
+            <td th:text="${movie.ratings}"></td>
+            <td>
+                <a th:href="@{'/app/movies/edit/' + ${movie.id}}" th:text="#{action.edit}"/>
+            </td>
+            <td>
+                <a th:href="@{'/app/movies/delete/' + ${movie.id}}" th:text="#{action.delete}"/>
+            </td>
+        </tr>
+        </tbody>
     </table>
+    <a th:href="@{/app/movies/create}" th:text="#{action.create}"></a>
 </body>
-    <tr th:each="movie : ${movies}">
-        <td th:text="${movie.title}"></td>
-        <td th:text="${movie.genre}"></td>
-        <td th:text="${movie.rating}"></td>
 </html>
